@@ -36,6 +36,8 @@ BUILD_DIR = build
 ######################################
 # C sources
 C_SOURCES =  \
+Core/Src/helpers.c \
+Core/Src/systemclock_config.c \
 Core/Src/main.c 
 
 # ASM sources
