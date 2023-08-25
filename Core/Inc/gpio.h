@@ -8,28 +8,37 @@
 #define GPIO_ALT_FUNCION 0b10
 #define GPIO_ANALOG_MODE 0b11
 
-#define PORT0 0
-#define PORT1 2
-#define PORT2 4
-#define PORT3 6
-#define PORT4 8
-#define PORT5 10
-#define PORT6 12
-#define PORT7 14
-#define PORT8 16
-#define PORT9 18
-#define PORT10 20
-#define PORT11 22
-#define PORT12 24
-#define PORT13 26
-#define PORT14 28
-#define PORT15 30
+#define PIN0 0
+#define PIN1 2
+#define PIN2 4
+#define PIN3 6
+#define PIN4 8
+#define PIN5 10
+#define PIN6 12
+#define PIN7 14
+#define PIN8 16
+#define PIN9 18
+#define PIN10 20
+#define PIN11 22
+#define PIN12 24
+#define PIN13 26
+#define PIN14 28
+#define PIN15 30
+
+#define GPIONR_A 0
+#define GPIONR_B 1
+#define GPIONR_C 2
+#define GPIONR_D 3
+#define GPIONR_E 4
+#define GPIONR_F 5
+#define GPIONR_G 6
+#define GPIONR_H 7
+
 
 #define GPIO_PIN_SET 0
 #define GPIO_PIN_UNSET 16
 
-
-void GPIO_Config(GPIO_TypeDef *, int, int);
+void GPIO_Config(GPIO_TypeDef *, int, int, int);
 void GPIO_WritePin(GPIO_TypeDef *, int, int);
 
 #endif

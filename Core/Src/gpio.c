@@ -2,14 +2,15 @@
 
 #define GPIO_OFFSET 0x0400UL
 
-void GPIO_Config(GPIO_TypeDef *GPIO, int io_type, int port)
+void GPIO_Config(GPIO_TypeDef *GPIO, int io_type, int pin, int gpionr)
 {
-    int gpio_rcc_register = (GPIO - GPIOA) / GPIO_OFFSET;
+    volatile int gpio_rcc_register = (int) ((GPIO - GPIOA) / GPIO_OFFSET);
     // enable gpioa clock
-    RCC->AHB1ENR |= (1 << gpio_rcc_register);
+    RCC->AHB1ENR |= (1 << gpionr);
 
     // set pin as output
-    GPIO->MODER |= io_type << port;
+    GPIO->MODER &= ~(0b11 << pin);
+    GPIO->MODER |= io_type << pin;
 
     // configure OUTPUT MODE
     GPIO->OTYPER = 0;
