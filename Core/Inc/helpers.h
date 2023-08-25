@@ -4,6 +4,6 @@
 #define COUNTDOWN_EXCEEDED_ERROR -1
 #define INIT_SUCCESS 1
 
-void sleep(int);
+void msleep(int);
 
 #endif
