@@ -1,12 +1,12 @@
 #include "gpio.h"
 
-#define GPIO_OFFSET 0x0400UL
+#define GPIO_OFFSET 0x400UL
 
-void GPIO_Config(GPIO_TypeDef *GPIO, int io_type, int pin, int gpionr)
+void GPIO_Config(GPIO_TypeDef *GPIO, int io_type, int pin)
 {
-    volatile int gpio_rcc_register = (int) ((GPIO - GPIOA) / GPIO_OFFSET);
+    volatile int gpio_rcc_register = (int) ((GPIO - GPIOA) * sizeof(GPIO_TypeDef) / GPIO_OFFSET);
     // enable gpioa clock
-    RCC->AHB1ENR |= (1 << gpionr);
+    RCC->AHB1ENR |= (1 << gpio_rcc_register);
 
     // set pin as output
     GPIO->MODER &= ~(0b11 << pin);

@@ -10,7 +10,7 @@ void USART_Init_PC(void)
 	RCC->APB1ENR |= (1 << 17);				// enable clock of usart 2
     RCC->AHB1ENR |= (1 << 0);
 
-    GPIO_Config(GPIOA, GPIO_ALT_FUNCION, PIN2, GPIONR_A);
+    GPIO_Config(GPIOA, GPIO_ALT_FUNCION, PIN2);
 
 	GPIOA->AFR[0] &= ~(0xf << 4);		// reset alternate function of pin PB 6
 	GPIOA->AFR[0] &= ~(0xf << 8);		// reset alternate function of pin PB 7
