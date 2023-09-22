@@ -2,7 +2,7 @@
 
 
 static uint8_t init_done = 0;
-
+IOPin p = {GPIOA, PIN2};
 
 void USART_Init_PC(void)
 {
@@ -10,7 +10,7 @@ void USART_Init_PC(void)
 	RCC->APB1ENR |= (1 << 17);				// enable clock of usart 2
     RCC->AHB1ENR |= (1 << 0);
 
-    GPIO_Config(GPIOA, GPIO_ALT_FUNCION, PIN2);
+    GPIO_Config(p, GPIO_ALT_FUNCION);
 
 	GPIOA->AFR[0] &= ~(0xf << 4);		// reset alternate function of pin PB 6
 	GPIOA->AFR[0] &= ~(0xf << 8);		// reset alternate function of pin PB 7
@@ -24,7 +24,7 @@ void USART_Init_PC(void)
 	USART2->CR2 = 0x00000000;				// set to reset value
 	USART2->CR3 = 0x00000000;				// set to reset value
 
-	USART2->BRR = 1600;						// baudrate 112500 (180MHz/112500)
+	USART2->BRR = 400;					// baudrate 112500 (45MHz/112500)
 
 
 	USART2->CR1 |= (1 << 3);				// enable transmitter
