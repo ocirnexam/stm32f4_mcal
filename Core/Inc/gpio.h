@@ -28,10 +28,14 @@
 #define GPIO_PIN_SET 0
 #define GPIO_PIN_UNSET 16
 
+#define PIN_HIGH 1
+#define PIN_LOW 0
+
 typedef struct
 {
   GPIO_TypeDef *port;
   int pin;
+  int alt_function;
 } IOPin;
 
 void GPIO_Config(IOPin p, int);
