@@ -2,7 +2,7 @@
 
 
 static uint8_t init_done = 0;
-IOPin p = {GPIOA, PIN2};
+IOPin p = {GPIOA, PIN2, GPIO_ALT_FUNCION, GPIO_ALTF_SYSTEM};
 
 void USART_Init_PC(void)
 {
@@ -10,22 +10,21 @@ void USART_Init_PC(void)
 	RCC->APB1ENR |= (1 << 17);				// enable clock of usart 2
     RCC->AHB1ENR |= (1 << 0);
 
-    GPIO_Config(p, GPIO_ALT_FUNCION);
+    GPIO_Config(p);
 
-	GPIOA->AFR[0] &= ~(0xf << 4);		// reset alternate function of pin PB 6
-	GPIOA->AFR[0] &= ~(0xf << 8);		// reset alternate function of pin PB 7
+	GPIOA->AFR[0] &= ~(0xf << 4);			// reset alternate function of pin PB 6
+	GPIOA->AFR[0] &= ~(0xf << 8);			// reset alternate function of pin PB 7
 	GPIOA->AFR[0] |= (0x7 << 8);			// set alternate function of pin PB 7 to AF 7
 
 	USART2->CR1 = 0x00000000;				// set to reset value
-	USART2->CR1 &= ~(1 << 12);		// data length (M[1:0])
+	USART2->CR1 &= ~(1 << 12);				// data length (M[1:0])
 	USART2->CR1 &= ~(1 << 15);				// oversampling with 16
 	USART2->CR1 &= ~(1 << 10);				// parity control disabled
 
 	USART2->CR2 = 0x00000000;				// set to reset value
 	USART2->CR3 = 0x00000000;				// set to reset value
 
-	USART2->BRR = 1600;					// baudrate 10000 (16MHz/10000)
-
+	USART2->BRR = 100; // TODO
 
 	USART2->CR1 |= (1 << 3);				// enable transmitter
 	USART2->CR1 |= (1 << 13);				// enable uart

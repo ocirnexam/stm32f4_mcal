@@ -3,7 +3,7 @@
 #define GPIO_OFFSET 0x400UL
 
 
-void GPIO_Config(IOPin p, int io_type)
+void GPIO_Config(IOPin p)
 {
     int shift_pin = p.pin * 2;
     volatile int gpio_rcc_register = (int) ((p.port - GPIOA) * sizeof(GPIO_TypeDef) / GPIO_OFFSET);
@@ -12,10 +12,10 @@ void GPIO_Config(IOPin p, int io_type)
 
     // set pin mode
     p.port->MODER &= ~(0b11 << shift_pin);
-    p.port->MODER |= (io_type << shift_pin);
+    p.port->MODER |= (p.io_type << shift_pin);
 
-    if (io_type == GPIO_ALT_FUNCION) {
-        p.port->AFR[(int) p.pin / 8] |= (p.alt_function << p.pin * 4);
+    if (p.io_type == GPIO_ALT_FUNCION) {
+        p.port->AFR[((int) p.pin / 8)] |= (p.alt_function << p.pin * 4);
     }
 
     // configure push pull

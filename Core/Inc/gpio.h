@@ -25,6 +25,23 @@
 #define PIN14 14
 #define PIN15 15
 
+#define GPIO_ALTF_SYSTEM 0
+#define GPIO_ALTF_TIM1_TIM2 1
+#define GPIO_ALTF2 2
+#define GPIO_ALTF3 3
+#define GPIO_ALTF4 4
+#define GPIO_ALTF5 5
+#define GPIO_ALTF6 6
+#define GPIO_ALTF7 7
+#define GPIO_ALTF8 8
+#define GPIO_ALTF9 9
+#define GPIO_ALTF10 10
+#define GPIO_ALTF11 11
+#define GPIO_ALTF12 12
+#define GPIO_ALTF13 13
+#define GPIO_ALTF14 14
+#define GPIO_ALTF15 15
+
 #define GPIO_PIN_SET 0
 #define GPIO_PIN_UNSET 16
 
@@ -35,10 +52,11 @@ typedef struct
 {
   GPIO_TypeDef *port;
   int pin;
+  int io_type;
   int alt_function;
 } IOPin;
 
-void GPIO_Config(IOPin p, int);
+void GPIO_Config(IOPin p);
 void GPIO_WritePin(IOPin p, int);
 
 #endif

@@ -6,7 +6,14 @@
 #include "gpio.h"
 #include "timer.h"
 
-void Servo_Init(IOPin servo);
-void Servo_Write(int angle);
+typedef struct
+{
+  IOPin port;
+  TIM_TypeDef *timer;
+  int channel;
+} Servo;
+
+void Servo_Init(Servo);
+void Servo_Write(Servo, int);
 
 #endif /* _USART_H */

@@ -4,7 +4,7 @@
 #include <stm32f446xx.h>
 #include <stdint.h>
 
-void Timer_Init_PWM(TIM_TypeDef *);
+void Timer_Init_PWM(TIM_TypeDef *, int, int);
 int Timer_Init(TIM_TypeDef *, int, int);
 int Timer_Quit(TIM_TypeDef *);
 int Timer_Start(TIM_TypeDef *);

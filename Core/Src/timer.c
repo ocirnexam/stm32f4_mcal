@@ -1,18 +1,20 @@
 #include "timer.h"
 
-void Timer_Init_PWM(TIM_TypeDef *timer)
+void Timer_Init_PWM(TIM_TypeDef *timer, int prescaler, int steps)
 {
     RCC->APB1ENR |= (1<<0);            // Timer 2 TODO: MAKE DYNAMIC
-    timer->PSC = 16-1;                 // 16MHZ / 16 = 1MHZ
-    timer->ARR = 100-1;                // Period of 100 ticks
-    timer->CCR2 = 50;                 // duty cycle of 50% in channel 2
-    timer->CNT = 0;                    // count 0
 
     timer->CCMR1 &= ~(0b11 << 8);      // Enable Output Mode for Channel 2
-    timer->CCMR1 |= ((0b110 << 12));   // Enable PWM1 mode
+    timer->CCMR1 |= (0b110 << 12);     // Enable PWM1 mode
     timer->CCMR1 |= (1 << 11);         // Enable OC1PE
+    timer->CCER &= ~(1 << 5);          // Output Polarity Active High
     timer->CR1 |= (1 << 7);            // ARPE: TIM2_ARR register is buffered
-    timer->CR1 |= (1 << 0);
+    timer->EGR |= (1 << 0);            // UG: Reinitialize the counter
+
+    timer->PSC = prescaler-1;          // 16MHZ / 16 = 1MHZ
+    timer->ARR = steps-1;              // Period of 180 ticks
+    timer->CCR2 = 90;                  // duty cycle of 50% in channel 2
+    timer->CR1 |= (1 << 0);            // Enable Timer 2
 
 }
 
