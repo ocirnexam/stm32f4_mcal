@@ -24,7 +24,7 @@ void USART_Init_PC(void)
 	USART2->CR2 = 0x00000000;				// set to reset value
 	USART2->CR3 = 0x00000000;				// set to reset value
 
-	USART2->BRR = 100; // TODO
+	USART2->BRR = 1600; // TODO
 
 	USART2->CR1 |= (1 << 3);				// enable transmitter
 	USART2->CR1 |= (1 << 13);				// enable uart

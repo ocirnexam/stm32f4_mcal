@@ -20,6 +20,7 @@ void GPIO_Config(IOPin p)
 
     // configure push pull
     p.port->OTYPER &= ~(1 << p.pin);
+    p.port->PUPDR |= 1;
 }
 
 

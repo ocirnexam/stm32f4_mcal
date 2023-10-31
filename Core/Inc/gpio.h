@@ -27,7 +27,7 @@
 
 #define GPIO_ALTF_SYSTEM 0
 #define GPIO_ALTF_TIM1_TIM2 1
-#define GPIO_ALTF2 2
+#define GPIO_ALTF_TIM3_TIM5 2
 #define GPIO_ALTF3 3
 #define GPIO_ALTF4 4
 #define GPIO_ALTF5 5

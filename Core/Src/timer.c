@@ -2,18 +2,19 @@
 
 void Timer_Init_PWM(TIM_TypeDef *timer, int prescaler, int steps)
 {
-    RCC->APB1ENR |= (1<<0);            // Timer 2 TODO: MAKE DYNAMIC
+    RCC->APB1ENR |= (1<<1);            // Timer 3 TODO: MAKE DYNAMIC
 
-    timer->CCMR1 &= ~(0b11 << 8);      // Enable Output Mode for Channel 2
-    timer->CCMR1 |= (0b110 << 12);     // Enable PWM1 mode
-    timer->CCMR1 |= (1 << 11);         // Enable OC1PE
-    timer->CCER &= ~(1 << 5);          // Output Polarity Active High
-    timer->CR1 |= (1 << 7);            // ARPE: TIM2_ARR register is buffered
-    timer->EGR |= (1 << 0);            // UG: Reinitialize the counter
+    timer->CCMR1 &= ~(0b11 << 0);      // Enable Output Mode for Channel 1
+    timer->CCMR1 |= (0b110 << 4);      // Enable PWM1 mode
+    timer->CCMR1 |= (1 << 3);          // Enable OC1PE
+    timer->CCER &= ~(1 << 1);          // Output Polarity Active High
+    timer->CCER |= (1 << 0);           // Output Compare Enable
+    timer->CR1 |= (1 << 7) | (1 << 3);            // ARPE: TIM2_ARR register is buffered
+    timer->EGR |= (1 << 0) | (1 << 2);            // UG: Reinitialize the counter
 
-    timer->PSC = prescaler-1;          // 16MHZ / 16 = 1MHZ
-    timer->ARR = steps-1;              // Period of 180 ticks
-    timer->CCR2 = 90;                  // duty cycle of 50% in channel 2
+    timer->PSC = prescaler-1;          // 16MHZ / 16 = 1MHz
+    timer->ARR = steps-1;              // Period of 10KHz
+    timer->CCR1 = 0;               // duty cycle of 100% in channel 1
     timer->CR1 |= (1 << 0);            // Enable Timer 2
 
 }
