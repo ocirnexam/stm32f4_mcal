@@ -8,6 +8,7 @@ void Servo_Init(Servo servo)
 
 void Servo_Write(Servo servo, int angle)
 {
+    TIM3->CR1 &= ~1;
     switch(servo.channel) {
       case 1:
         servo.timer->CCR1 = angle;
@@ -17,4 +18,5 @@ void Servo_Write(Servo servo, int angle)
       default:
         break;
     }
+    TIM3->CR1 |= 1;
 }
