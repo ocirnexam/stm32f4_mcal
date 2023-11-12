@@ -42,6 +42,8 @@
 #define GPIO_ALTF14 14
 #define GPIO_ALTF15 15
 
+#define ADC1_IN0 GPIO_ALTF_SYSTEM
+
 #define GPIO_PIN_SET 0
 #define GPIO_PIN_UNSET 16
 
@@ -58,5 +60,7 @@ typedef struct
 
 void GPIO_Config(IOPin p);
 void GPIO_WritePin(IOPin p, int);
+uint8_t GPIO_ReadPin(IOPin p);
+uint16_t GPIO_ReadAnalogPin(IOPin p);
 
 #endif

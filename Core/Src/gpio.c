@@ -16,6 +16,18 @@ void GPIO_Config(IOPin p)
 
     if (p.io_type == GPIO_ALT_FUNCION) {
         p.port->AFR[((int) p.pin / 8)] |= (p.alt_function << p.pin * 4);
+    } else if (p.io_type == GPIO_ANALOG_MODE) {
+        switch(p.alt_function) {
+            case ADC1_IN0:
+                RCC->APB2ENR |= 1 << 8;
+                ADC1->CR2 |= 1; // Enable ADC1
+                ADC1->CR2 |= 1 << 1; // Enable Continuous Conversion
+                ADC1->CR2 |= 1 << 30; // Enable SWStart
+                ADC1->SMPR2 |= 0b001 << 0; // Sample time of 15 cycles
+                break;
+            default:
+                break;
+        }
     }
 
     // configure push pull
@@ -34,4 +46,21 @@ void GPIO_WritePin(IOPin p, int value)
         p.port->ODR |= (1 << (p.pin));
     else if (value == PIN_LOW)
         p.port->ODR &= ~(1 << (p.pin));
+}
+
+uint8_t GPIO_ReadPin(IOPin p)
+{
+    return (p.port->IDR >> p.pin) & 1;
+}
+
+uint16_t GPIO_ReadAnalogPin(IOPin p)
+{
+    switch(p.alt_function)
+    {
+        case ADC1_IN0:
+            return ADC1->DR;
+            break;
+        default:
+            break;
+    }
 }
