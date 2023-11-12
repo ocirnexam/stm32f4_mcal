@@ -63,4 +63,5 @@ uint16_t GPIO_ReadAnalogPin(IOPin p)
         default:
             break;
     }
+    return -1;
 }
