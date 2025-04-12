@@ -1,23 +1,15 @@
 #include "servo.h"
 
-void Servo_Init(Servo servo)
+void Servo_Init(Servo* servo)
 {
-  GPIO_Config(servo.port);
-  Timer_Init_PWM(servo.timer, 16, 2500);
-  Timer_Start(servo.timer);
+  GPIO_Config(servo->port);
+  Timer_PWM_Init(servo->timer, 16, 20000); // pwm frequency 16MHz / 16 = 1MHz, 20000 steps => 1 cycle 50Hz
+  Timer_Start(servo->timer);
 }
 
-void Servo_Write(Servo servo, int angle)
+void Servo_Write(Servo* servo, int angle)
 {
     // TIM3->CR1 &= ~1;
-    switch(servo.channel) {
-      case 1:
-        servo.timer->CCR1 = angle;
-      case 2:
-        servo.timer->CCR2 = angle;
-        break;
-      default:
-        break;
-    }
+    Timer_PWM_Set_Duty_Cycle_Degrees(servo->timer, servo->channel, angle);
     // TIM3->CR1 |= 1;
 }

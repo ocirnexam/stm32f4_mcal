@@ -13,7 +13,7 @@ typedef struct
   int channel;
 } Servo;
 
-void Servo_Init(Servo);
-void Servo_Write(Servo, int);
+void Servo_Init(Servo* servo);
+void Servo_Write(Servo* servo, int angle);
 
-#endif /* _USART_H */
+#endif

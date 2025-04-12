@@ -1,6 +1,6 @@
 #include "timer.h"
 
-void Timer_Init_PWM(TIM_TypeDef *timer, int prescaler, int steps)
+void Timer_PWM_Init(TIM_TypeDef *timer, int prescaler, int steps)
 {
     RCC->APB1ENR |= (1<<1);            // Timer 3 TODO: MAKE DYNAMIC
 
@@ -9,12 +9,11 @@ void Timer_Init_PWM(TIM_TypeDef *timer, int prescaler, int steps)
     timer->CCMR1 |= (1 << 3);          // Enable OC1PE
     timer->CCER &= ~(1 << 1);          // Output Polarity Active High
     timer->CCER |= (1 << 0);           // Output Compare Enable
-    timer->CR1 |= (1 << 7) | (1 << 3); // ARPE: TIM2_ARR register is buffered
-    timer->EGR |= (1 << 0) | (1 << 2); // UG: Reinitialize the counter
+    timer->CR1 |= (1 << 7);            // ARPE
 
-    timer->PSC = prescaler-1;          // 16MHZ / 16 = 1MHz
-    timer->ARR = steps-1;              // Period of 10KHz
-    timer->CCR1 = 0;                   // duty cycle of 100% in channel 1
+    timer->PSC = prescaler-1;          // sysclock / (PSC + 1) = PWM frequency
+    timer->ARR = steps-1;              // amount of steps of the PWM cycle 
+    timer->CCR1 = 0;                   // duty cycle of 0% in channel 1
 
 }
 
@@ -51,7 +50,12 @@ int Timer_Start(TIM_TypeDef *timer)
     return ((timer->CR1 & (1<<0)) == 1);
 }
 
-void Timer_Set_Count_Limit(TIM_TypeDef *timer, int counter_limit)
+void Timer_PWM_Set_Duty_Cycle_Steps(TIM_TypeDef *timer, int counter_limit)
 {
-    timer->ARR = counter_limit;
+    timer->CCR1 = counter_limit;
+}
+
+void Timer_PWM_Set_Duty_Cycle_Degrees(TIM_TypeDef* timer, int channel, int angle)
+{
+    timer->CCR1 = (uint32_t) (((float)(angle / 180.f)) * 2000.f) + 500.f;
 }
